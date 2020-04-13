@@ -6,6 +6,8 @@
         <link rel="stylesheet" href="./css/styles.css">
     </head>
 
+    <meta name="viewport" content="height=device-height, initial-scale=1.0">
+
     <body>
         <div class="chat">
             <div id="sidebar" class="chat__sidebar">
@@ -15,13 +17,13 @@
                 <div id="messages" class="chat__messages"></div>
 
                 <div class="compose">
-                    <form id="text_form">
+                    <form id="text_form" autocomplete="off">
                         <input name="message" placeholder="message" />
-                        <button>Submit</button>
+                        <button>Send</button>
                     </form>
                     <button id="send-location">Send Location</button>
-                </div>
-                    
+                </div> 
+
             </div>
         </div>        
 

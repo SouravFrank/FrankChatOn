@@ -71,6 +71,7 @@ button:disabled {
 .centered-form__box {
     box-shadow: 0px 0px 17px 1px #1D1F26;
     background: #F7F7FA;
+    color: #333744;
     padding: 24px;
     width: 250px;
 }
@@ -95,7 +96,9 @@ button:disabled {
     color: white;
     background: #333744;
     width: 225px;
-    overflow-y: scroll
+    scrollbar-color: red yellow;
+    overflow-y: scroll;
+    
 }
 
 /* Chat styles */
@@ -106,6 +109,7 @@ button:disabled {
     flex-direction: column;
     max-height: 100vh;
 }
+
 
 .chat__messages {
     flex-grow: 1;
@@ -152,6 +156,7 @@ button:disabled {
 .compose input {
     border: 1px solid rgb(99, 50, 91);
     background-color: rgb(41, 14, 37);
+    color: wheat;
     width: 100%;
     padding: 12px;
     margin: 0 16px 0 0;
@@ -160,6 +165,9 @@ button:disabled {
 
 .compose button {
     font-size: 14px;
+    width: 20%;
+    float: right;
+    margin: 2px;
 }
 
 /* Chat Sidebar Styles */
@@ -172,7 +180,7 @@ button:disabled {
 }
 
 .list-title {
-    font-weight: 500;
+    font-weight: 600;
     font-size: 18px;
     margin-bottom: 4px;
     padding: 12px 24px 0 24px;
@@ -183,3 +191,21 @@ button:disabled {
     font-weight: 300;
     padding: 12px 24px 0 24px;
 }
+
+::-webkit-scrollbar {
+    width: 10px;
+  }
+  
+  /* Track */
+  ::-webkit-scrollbar-track {
+    background: #333744; 
+  }
+   
+  /* Handle */
+  ::-webkit-scrollbar-thumb {
+    background: #888; 
+  }
+  
+  /* Handle on hover */
+  ::-webkit-scrollbar-thumb:hover {
+    background: #555;
