@@ -15,28 +15,28 @@ const $sidebarTemplate = document.querySelector('#sidebar-template').innerHTML
 //options
 const { username, room } = Qs.parse(location.search, { ignoreQueryPrefix: true })
 
+// Function to handle autoscrolling
 const autoscroll = () => {
-    //NewMessage element
     const $newMessage = $messages.lastElementChild
 
-    //height if the new message
+    // Calculate the height of the new message including margin
     const newMessageStyles = getComputedStyle($newMessage)
     const newMessageMargin = parseInt(newMessageStyles.marginBottom)
     const newMessageHeight = $newMessage.offsetHeight + newMessageMargin
     
-    //visible height
+    // Visible height of the messages container
     const visibleHeight = $messages.offsetHeight
     
-    //Height of message container
+    // Total height of the messages container
     const containerHeight = $messages.scrollHeight
 
-    //How far I scrolled
+    // How far have we scrolled?
     const scrollOffset = $messages.scrollTop + visibleHeight
 
-    if( containerHeight - newMessageHeight <= scrollOffset ) {
-        $messages.scrollTop = $messages.scrollHeight
+    // If we are at the bottom before the new message, scroll to the bottom
+    if (containerHeight - newMessageHeight <= scrollOffset) {
+        $messages.scrollTop = containerHeight
     }
-     
 }
 
 socket.on('message', (message) => {
@@ -46,7 +46,7 @@ socket.on('message', (message) => {
         message: message.text,
         createdAt: moment(message.createdAt).format('hh:mm:ss A')
     })
-    $messages.insertAdjacentHTML('beforeend', html  )  
+    $messages.insertAdjacentHTML('beforeend', html)
     autoscroll()
 })
 
@@ -57,13 +57,12 @@ socket.on('locationMessage', (message) => {
         location: message.location,
         createdAt: moment(message.createdAt).format('hh:mm:ss A')
     })
-    $messages.insertAdjacentHTML('beforeend', html  )  
+    $messages.insertAdjacentHTML('beforeend', html)
     autoscroll()
 })
 
-socket.on('roomData', ({ room, users }) => {  
-    console.log(users);
-      
+socket.on('roomData', ({ room, users }) => {
+    console.log(users)
     const html = Mustache.render($sidebarTemplate, {
         room,
         users
@@ -73,17 +72,15 @@ socket.on('roomData', ({ room, users }) => {
 
 $messageForm.addEventListener('submit', (e) => {
     e.preventDefault()
-    $messageForm.setAttribute('disabled', 'disabled')
+    $messageFormButton.setAttribute('disabled', 'disabled')
 
-    //Disabled
     const message = e.target.elements.message.value
     socket.emit('sendMessage', message, (callback) => {
-        //Enabled
         $messageFormButton.removeAttribute('disabled')
         $messageFormInput.value = ''
         $messageFormInput.focus()
         console.log(callback);
-    })  
+    })
 })
 
 $geoLocation.addEventListener('click', () => {
@@ -97,7 +94,7 @@ $geoLocation.addEventListener('click', () => {
             lat: position.coords.latitude,
             long: position.coords.longitude
         }, () => {
-            console.log('Location send')
+            console.log('Location sent')
             //Enabled
             $geoLocation.removeAttribute('disabled')
         })    
