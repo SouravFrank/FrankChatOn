@@ -18,7 +18,7 @@
 
             <div class="compose">
                 <form id="text_form" autocomplete="off">
-                    <input name="message" placeholder="Type a message..." />
+                   <textarea name="message" placeholder="Type a message..."></textarea>
                     <div class="compose-actions">
                         <button id="toggle-compose">+</button>
                         <button>Send</button>
@@ -36,7 +36,8 @@
                     <span class="message__name">{{username}}</span>
                     <span class="message__meta">{{createdAt}}</span>
                 </p>
-                <p>{{message}}</p>
+                <div class="message__content">{{{message}}}</div>
+                <button class="copy-button" data-message="{{rawMessage}}">Copy</button>
             </div>
         </script>
 
@@ -69,15 +70,76 @@
         // JavaScript to toggle the compose area
         const toggleButton = document.getElementById('toggle-compose');
         const composeArea = document.querySelector('.compose');
-        const inputField = composeArea.querySelector('input');
+        const textArea = composeArea.querySelector('textarea');
 
         toggleButton.addEventListener('click', () => {
             composeArea.classList.toggle('expanded');
             if (composeArea.classList.contains('expanded')) {
-                inputField.style.height = '100%';
+                textArea.style.height = '100%';
+                textArea.setAttribute('rows', '10'); // Adjust this number as needed
             } else {
-                inputField.style.height = 'auto';
+                textArea.style.height = 'auto';
+                textArea.setAttribute('rows', '1');
             }
+        });
+
+        // Auto-resize textarea
+        textArea.addEventListener('input', function() {
+            if (!composeArea.classList.contains('expanded')) {
+                this.style.height = 'auto';
+                this.style.height = (this.scrollHeight) + 'px';
+            }
+        });
+
+        // Function to escape HTML
+        function escapeHtml(unsafe) {
+            return unsafe
+                 .replace(/&/g, "&amp;")
+                 .replace(/</g, "&lt;")
+                 .replace(/>/g, "&gt;")
+                 .replace(/"/g, "&quot;")
+                 .replace(/'/g, "&#039;");
+        }
+
+        // Function to convert newlines to <br> tags
+        function nl2br(str) {
+            return str.replace(/\n/g, '<br>');
+        }
+
+        // Function to copy message content
+        function copyMessageContent(message, button) {
+            navigator.clipboard.writeText(message).then(() => {
+                console.log('Message copied to clipboard');
+                button.textContent = 'Copied!';
+                button.disabled = true;
+                setTimeout(() => {
+                    button.textContent = 'Copy';
+                    button.disabled = false;
+                }, 1000);
+            }, (err) => {
+                console.error('Could not copy text: ', err);
+            });
+        }
+
+        // Event delegation for copy buttons
+        document.querySelector('#messages').addEventListener('click', (e) => {
+            if (e.target.classList.contains('copy-button')) {
+                const message = e.target.getAttribute('data-message');
+                copyMessageContent(message, e.target);
+            }
+        });
+
+        // Function to handle messages
+        socket.on('message', (message) => {
+            console.log(message)
+            const html = Mustache.render($messageTemplate, {
+                username: message.username,
+                message: nl2br(escapeHtml(message.text)),
+                rawMessage: message.text,
+                createdAt: moment(message.createdAt).format('hh:mm:ss A')
+            })
+            $messages.insertAdjacentHTML('beforeend', html)
+            autoscroll()
         });
     </script>
 </body>
