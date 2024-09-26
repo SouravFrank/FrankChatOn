@@ -136,13 +136,21 @@ a {
 .compose {
     display: flex;
     flex-direction: column;
-    align-items: flex-start;
     background: rgba(35, 39, 42, 0.8);
     padding: 10px;
     border-top: 1px solid #444;
     border-radius: 0 0 16px 16px;
     backdrop-filter: blur(10px);
-    transition: height 0.3s;
+}
+
+.compose form {
+    width: 100%;
+    margin-bottom: 10px;
+}
+
+.compose-container {
+    display: flex;
+    flex-direction: column;
 }
 
 .compose textarea {
@@ -150,7 +158,6 @@ a {
     padding: 10px;
     border: 1px solid #444;
     border-radius: 8px;
-    margin-right: 10px;
     font-size: 1rem;
     background: rgba(58, 63, 68, 0.8);
     color: #e0e0e0;
@@ -158,40 +165,15 @@ a {
     resize: none;
     overflow-y: auto;
     min-height: 40px;
+    max-height: 200px; /* Set a maximum height */
     transition: height 0.3s;
 }
 
-.compose.expanded textarea {
-    height: 100%;
-}
-
-.compose.expanded form {
-    flex: 1;
+.compose-actions {
     display: flex;
-    flex-direction: column;
-}
-
-.compose.expanded button {
-    align-self: flex-end;
+    justify-content: space-between;
+    align-items: center;
     margin-top: 10px;
-}
-
-.compose form {
-    width: 100%;
-    display: flex;
-    margin-bottom: 10px;
-}
-
-.compose input {
-    flex: 1;
-    padding: 10px;
-    border: 1px solid #444;
-    border-radius: 8px;
-    margin-right: 10px;
-    font-size: 1rem;
-    background: rgba(58, 63, 68, 0.8);
-    color: #e0e0e0;
-    backdrop-filter: blur(10px);
 }
 
 .compose button {
@@ -209,21 +191,30 @@ a {
     background: #2980b9;
 }
 
+#toggle-compose {
+    background: #3e3e3f;
+}
+
+#toggle-compose:hover {
+    background: #384752;
+}
+
 #send-location {
-    margin-left: 0;
     margin-top: 10px;
-    padding: 10px 20px;
-    border: none;
     background: #e74c3c;
-    color: #fff;
-    border-radius: 8px;
-    cursor: pointer;
-    font-size: 1rem;
-    transition: background 0.3s;
 }
 
 #send-location:hover {
     background: #c0392b;
+}
+
+.compose.expanded .compose-container {
+    height: 50vh;
+}
+
+.compose.expanded textarea {
+    flex: 1;
+    max-height: none;
 }
 
 /* Scrollbar Styles */

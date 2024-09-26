@@ -18,10 +18,12 @@
 
             <div class="compose">
                 <form id="text_form" autocomplete="off">
-                   <textarea name="message" placeholder="Type a message..."></textarea>
-                    <div class="compose-actions">
-                        <button id="toggle-compose">+</button>
-                        <button>Send</button>
+                    <div class="compose-container">
+                        <textarea name="message" placeholder="Type a message..."></textarea>
+                        <div class="compose-actions">
+                            <button id="toggle-compose" type="button">+</button>
+                            <button type="submit">Send</button>
+                        </div>
                     </div>
                 </form>
                 <button id="send-location">Send Location</button>
@@ -76,10 +78,9 @@
             composeArea.classList.toggle('expanded');
             if (composeArea.classList.contains('expanded')) {
                 textArea.style.height = '100%';
-                textArea.setAttribute('rows', '10'); // Adjust this number as needed
             } else {
                 textArea.style.height = 'auto';
-                textArea.setAttribute('rows', '1');
+                textArea.style.height = (textArea.scrollHeight) + 'px';
             }
         });
 
@@ -87,7 +88,7 @@
         textArea.addEventListener('input', function() {
             if (!composeArea.classList.contains('expanded')) {
                 this.style.height = 'auto';
-                this.style.height = (this.scrollHeight) + 'px';
+                this.style.height = Math.min(this.scrollHeight, 200) + 'px';
             }
         });
 
