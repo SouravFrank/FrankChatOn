@@ -176,54 +176,91 @@ a {
     margin-top: 10px;
 }
 
-/* Updated compose button styles */
-.compose button[type="submit"] {
-    display: flex;
+/* Material UI-like Button Styles */
+.btn {
+    display: inline-flex;
     align-items: center;
     justify-content: center;
-    padding: 10px 20px;
+    padding: 8px 16px;
     border: none;
-    background: #3498db;
-    color: #fff;
-    border-radius: 25px;
+    border-radius: 4px;
+    font-size: 14px;
+    font-weight: 500;
     cursor: pointer;
-    font-size: 1rem;
     transition: all 0.3s ease;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+    background-color: #424242;
+    color: #fff;
     min-width: 120px;
+    height: 40px;
 }
 
-.compose button[type="submit"]:hover {
-    background: #2980b9;
-    transform: translateY(-2px);
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+.btn:hover {
+    background-color: #616161;
 }
 
-.compose button[type="submit"]::before {
-    content: "\27A4"; /* Unicode for right arrow */
+.btn-icon {
+    padding: 8px 12px;
+}
+
+.btn-icon .material-icons {
     margin-right: 8px;
-    font-size: 1.2rem;
+    font-size: 18px;
 }
 
-#toggle-compose {
-    background: #3e3e3f;
+.btn-text {
+    text-transform: capitalize;
 }
 
-#toggle-compose:hover {
-    background: #384752;
+.btn-primary {
+    background-color: #3498db;
+    font-size: 16px;
+    min-width: 140px;
+    height: 48px;
+}
+
+.btn-primary:hover {
+    background-color: #2980b9;
+}
+
+/* Updated compose button styles */
+.compose-actions {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 10px;
+    flex-wrap: wrap;
+}
+
+.compose-actions__buttons {
+    display: flex;
+    gap: 8px;
+    margin-bottom: 8px;
+}
+
+#toggle-compose .material-icons {
+    transition: transform 0.3s ease;
+}
+
+#toggle-compose.expanded .material-icons {
+    transform: rotate(180deg);
 }
 
 #send-location {
-    margin-top: 10px;
-    background: #e74c3c;
+    background-color: #4c5455;
 }
 
 #send-location:hover {
-    background: #c0392b;
+    background-color: #95a5a6;
+}
+
+.compose.expanded {
+    height: auto;
+    max-height: 50vh;
 }
 
 .compose.expanded .compose-container {
     height: 50vh;
+    max-height: calc(50vh - 70px);
 }
 
 .compose.expanded textarea {
@@ -269,7 +306,8 @@ a {
 }
 
 .compose.expanded {
-    height: 50vh;
+    height: auto;
+    max-height: 50vh;
 }
 
 .compose-actions {

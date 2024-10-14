@@ -44,11 +44,14 @@ const autoscroll = () => {
 // Toggle compose area
 $toggleComposeButton.addEventListener('click', () => {
     $composeArea.classList.toggle('expanded');
+    $toggleComposeButton.classList.toggle('expanded');
     if ($composeArea.classList.contains('expanded')) {
         $messageFormInput.style.height = '100%';
+        $toggleComposeButton.querySelector('.btn-text').textContent = 'Collapse';
     } else {
         $messageFormInput.style.height = 'auto';
         $messageFormInput.style.height = ($messageFormInput.scrollHeight) + 'px';
+        $toggleComposeButton.querySelector('.btn-text').textContent = 'Expand';
     }
 });
 

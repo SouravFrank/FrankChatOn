@@ -6,6 +6,7 @@
     <link rel="icon" href="./img/favicon.png">
     <link rel="stylesheet" href="./css/styles.css">
     <meta name="viewport" content="height=device-height, initial-scale=1.0">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 </head>
 
 <body>
@@ -22,10 +23,19 @@
                         <textarea name="message" placeholder="Type a message..."></textarea>
                         <div class="compose-actions">
                             <div class="compose-actions__buttons">
-                                <button id="toggle-compose" type="button">+</button>
-                                <button id="send-location">Send Location</button>
+                                <button id="toggle-compose" type="button" class="btn btn-icon">
+                                    <span class="material-icons">expand_less</span>
+                                    <span class="btn-text">Expand</span>
+                                </button>
+                                <button id="send-location" class="btn btn-icon">
+                                    <span class="material-icons">location_on</span>
+                                    <span class="btn-text">Send Location</span>
+                                </button>
                             </div>
-                            <button type="submit">Send</button>
+                            <button type="submit" class="btn btn-icon btn-primary">
+                                <span class="material-icons">send</span>
+                                <span class="btn-text">Send</span>
+                            </button>
                         </div>
                     </div>
                 </form>
