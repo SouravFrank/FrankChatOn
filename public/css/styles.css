@@ -10,202 +10,330 @@ html {
     font-size: 16px;
 }
 
-input {
-    font-size: 14px;
-}
-
 body {
-    line-height: 1.4;
-    color: #dadada;
-    background-color: #1D1F26;
-    font-family: Helvetica, Arial, sans-serif;
-}
-
-h1 {
-    margin-bottom: 16px;
-}
-
-label {
-    display: block;
-    font-size: 14px;
-    margin-bottom: 8px;
-    color: #de188c;
-}
-
-input {
-    border: 1px solid #1D1F26;
-    padding: 12px;
-    outline: none;
-}
-
-button {
-    cursor: pointer;
-    padding: 12px;
-    background: #9b0aef;
-    border: none;
-    color: white;
-    font-size: 16px;
-    transition: background .3s ease;
-}
-
-button:hover {
-    background: #de188c;
-}
-
-button:disabled {
-    cursor: default;
-    background: #7c5cbf94;
-}
-
-/* Join Page Styles */
-
-.centered-form {
-    background: #333744;
-    width: 100vw;
-    height: 100vh;   
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: linear-gradient(145deg, #1e1e1e, #2c2f33);
+    color: #e0e0e0;
     display: flex;
     justify-content: center;
     align-items: center;
+    height: 100vh;
+    margin: 0;
+    overflow: hidden;
 }
 
-.centered-form__box {
-    box-shadow: 0px 0px 17px 1px #1D1F26;
-    background: #F7F7FA;
-    color: #333744;
-    padding: 24px;
-    width: 250px;
+h1, h2, h3, h4, h5, h6 {
+    margin: 0;
 }
 
-.centered-form button {
-    width: 100%;
+a {
+    text-decoration: none;
+    color: inherit;
 }
 
-.centered-form input {
-    margin-bottom: 16px;
-    width: 100%;
-}
-
-/* Chat Page Layout */
+/* Chat Container */
 
 .chat {
     display: flex;
+    width: 100%;
+    height: 100vh;
+    background: rgba(44, 47, 51, 0.8);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    border-radius: 16px;
+    backdrop-filter: blur(10px);
+    overflow: hidden;
 }
+
+/* Sidebar */
 
 .chat__sidebar {
-    height: 100vh;
-    color: white;
-    background: #333744;
-    width: 225px;
-    scrollbar-color: red yellow;
-    overflow-y: scroll;
-    
-}
-
-/* Chat styles */
-
-.chat__main {
-    flex-grow: 1;
+    width: 25%;
+    background: rgba(35, 39, 42, 0.8);
+    color: #fff;
+    padding: 20px;
     display: flex;
     flex-direction: column;
-    max-height: 100vh;
+    justify-content: space-between;
+    border-radius: 16px 0 0 16px;
+    backdrop-filter: blur(10px);
 }
-
-
-.chat__messages {
-    flex-grow: 1;
-    padding: 24px 24px 0 24px;
-    overflow-y: scroll;
-}
-
-/* Message Styles */
-
-.message {
-    margin-bottom: 16px;   
-}
-
-.message__name {
-    font-weight: 600;
-    font-size: 14px;
-    margin-right: 8px;
-}
-
-.message__meta {
-    color: #777;
-    font-size: 14px;
-}
-
-.message a {
-    color: #0070CC;
-}
-
-/* Message Composition Styles */
-
-.compose {
-    display: flex;
-    flex-shrink: 0;
-    margin-top: 16px;
-    padding: 24px;
-}
-
-.compose form {
-    display: flex;
-    flex-grow: 1;
-    margin-right: 16px;
-}
-
-.compose input {
-    border: 1px solid rgb(99, 50, 91);
-    background-color: rgb(41, 14, 37);
-    color: wheat;
-    width: 100%;
-    padding: 12px;
-    margin: 0 16px 0 0;
-    flex-grow: 1;
-}
-
-.compose button {
-    font-size: 14px;
-    width: 20%;
-    float: right;
-    margin: 2px;
-}
-
-/* Chat Sidebar Styles */
 
 .room-title {
-    font-weight: 400;
-    font-size: 22px;
-    background: #2c2f3a;
-    padding: 24px;   
+    font-size: 1.5rem;
+    font-weight: 600;
+    margin-bottom: 1rem;
+    text-transform: uppercase;
+    color: #ffcc00;
 }
 
 .list-title {
-    font-weight: 600;
-    font-size: 18px;
-    margin-bottom: 4px;
-    padding: 12px 24px 0 24px;
+    font-size: 1.2rem;
+    font-weight: 500;
+    margin-bottom: 0.5rem;
 }
 
 .users {
-    list-style-type: none;
-    font-weight: 300;
-    padding: 12px 24px 0 24px;
+    list-style: none;
+    padding: 0;
+    margin-top: 1rem;
+    border-top: 1px solid #444;
 }
 
+.users li {
+    padding: 0.5rem 0;
+    border-bottom: 1px solid #444;
+    transition: background 0.3s;
+}
+
+.users li:hover {
+    background: rgba(255, 255, 255, 0.1);
+}
+
+/* Main Chat Area */
+
+.chat__main {
+    width: 75%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding: 20px;
+    background: rgba(44, 47, 51, 0.8);
+    border-radius: 0 16px 16px 0;
+    backdrop-filter: blur(10px);
+}
+
+.chat__messages {
+    flex: 1;
+    overflow-y: auto;
+    padding-right: 10px;
+    margin-bottom: 20px;
+}
+
+.message {
+    margin-bottom: 15px;
+    padding: 10px;
+    background: rgba(58, 63, 68, 0.8);
+    border-radius: 16px;
+    backdrop-filter: blur(10px);
+}
+
+.message__name {
+    font-weight: bold;
+    color: #ffcc00;
+}
+
+.message__meta {
+    font-size: 0.85em;
+    color: #bbb;
+}
+
+.message a {
+    color: #3498db;
+}
+
+/* Compose Area */
+
+.compose {
+    display: flex;
+    flex-direction: column;
+    background: rgba(35, 39, 42, 0.8);
+    padding: 10px;
+    border-top: 1px solid #444;
+    border-radius: 0 0 16px 16px;
+    backdrop-filter: blur(10px);
+}
+
+.compose form {
+    width: 100%;
+    margin-bottom: 10px;
+}
+
+.compose-container {
+    display: flex;
+    flex-direction: column;
+}
+
+.compose textarea {
+    flex: 1;
+    padding: 10px;
+    border: 1px solid #444;
+    border-radius: 8px;
+    font-size: 1rem;
+    background: rgba(58, 63, 68, 0.8);
+    color: #e0e0e0;
+    backdrop-filter: blur(10px);
+    resize: none;
+    overflow-y: auto;
+    min-height: 40px;
+    max-height: 200px; /* Set a maximum height */
+    transition: height 0.3s;
+}
+
+.compose-actions {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 10px;
+}
+
+/* Material UI-like Button Styles */
+.btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 8px 16px;
+    border: none;
+    border-radius: 4px;
+    font-size: 14px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    background-color: #424242;
+    color: #fff;
+    min-width: 120px;
+    height: 40px;
+}
+
+.btn:hover {
+    background-color: #616161;
+}
+
+.btn-icon {
+    padding: 8px 12px;
+}
+
+.btn-icon .material-icons {
+    margin-right: 8px;
+    font-size: 18px;
+}
+
+.btn-text {
+    text-transform: capitalize;
+}
+
+.btn-primary {
+    background-color: #3498db;
+    font-size: 16px;
+    min-width: 140px;
+    height: 48px;
+}
+
+.btn-primary:hover {
+    background-color: #2980b9;
+}
+
+/* Updated compose button styles */
+.compose-actions {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 10px;
+    flex-wrap: wrap;
+}
+
+.compose-actions__buttons {
+    display: flex;
+    gap: 8px;
+    margin-bottom: 8px;
+}
+
+#toggle-compose .material-icons {
+    transition: transform 0.3s ease;
+}
+
+#toggle-compose.expanded .material-icons {
+    transform: rotate(180deg);
+}
+
+#send-location {
+    background-color: #4c5455;
+}
+
+#send-location:hover {
+    background-color: #95a5a6;
+}
+
+.compose.expanded {
+    height: auto;
+    max-height: 50vh;
+}
+
+.compose.expanded .compose-container {
+    height: 50vh;
+    max-height: calc(50vh - 70px);
+}
+
+.compose.expanded textarea {
+    flex: 1;
+    max-height: none;
+}
+
+/* Scrollbar Styles */
+
 ::-webkit-scrollbar {
-    width: 10px;
-  }
-  
-  /* Track */
-  ::-webkit-scrollbar-track {
-    background: #333744; 
-  }
-   
-  /* Handle */
-  ::-webkit-scrollbar-thumb {
-    background: #888; 
-  }
-  
-  /* Handle on hover */
-  ::-webkit-scrollbar-thumb:hover {
+    width: 8px;
+}
+
+::-webkit-scrollbar-track {
+    background: rgba(44, 47, 51, 0.8);
+}
+
+::-webkit-scrollbar-thumb {
+    background: #888;
+    border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
     background: #555;
+}
+
+/* Toggle Button for Compose Area */
+
+#toggle-compose {
+    margin-right: 10px;
+    padding: 10px 20px;
+    border: none;
+    background: #3e3e3f;
+    color: #fff;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 1rem;
+    transition: background 0.3s;
+}
+
+#toggle-compose:hover {
+    background: #384752;
+}
+
+.compose.expanded {
+    height: auto;
+    max-height: 50vh;
+}
+
+.compose-actions {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.message__content {
+    white-space: pre-wrap;
+    word-wrap: break-word;
+    font-family: inherit;
+    margin: 5px 0;
+}
+
+.copy-button {
+    background: #3498db;
+    color: #fff;
+    border: none;
+    padding: 5px 10px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 0.8rem;
+    transition: background 0.3s;
+}
+
+.copy-button:hover {
+    background: #2980b9;
+}

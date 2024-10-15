@@ -1,56 +1,73 @@
 <!DOCTYPE html>
-<html> 
-    <head> 
-        <title>Chat App</title>
-        <link rel="icon" href="./img/favicon.png">
-        <link rel="stylesheet" href="./css/styles.css">
-    </head>
+<html>
 
+<head>
+    <title>Chat App</title>
+    <link rel="icon" href="./img/favicon.png">
+    <link rel="stylesheet" href="./css/styles.css">
     <meta name="viewport" content="height=device-height, initial-scale=1.0">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+</head>
 
-    <body>
-        <div class="chat">
-            <div id="sidebar" class="chat__sidebar">
+<body>
+    <div class="chat">
+        <div id="sidebar" class="chat__sidebar">
 
+        </div>
+        <div class="chat__main">
+            <div id="messages" class="chat__messages"></div>
+
+            <div class="compose">
+                <form id="text_form" autocomplete="off">
+                    <div class="compose-container">
+                        <textarea name="message" placeholder="Type a message..."></textarea>
+                        <div class="compose-actions">
+                            <div class="compose-actions__buttons">
+                                <button id="toggle-compose" type="button" class="btn btn-icon">
+                                    <span class="material-icons">expand_less</span>
+                                    <span class="btn-text">Expand</span>
+                                </button>
+                                <button id="send-location" class="btn btn-icon">
+                                    <span class="material-icons">location_on</span>
+                                    <span class="btn-text">Send Location</span>
+                                </button>
+                            </div>
+                            <button type="submit" class="btn btn-icon btn-primary">
+                                <span class="material-icons">send</span>
+                                <span class="btn-text">Send</span>
+                            </button>
+                        </div>
+                    </div>
+                </form>
             </div>
-            <div class="chat__main">
-                <div id="messages" class="chat__messages"></div>
 
-                <div class="compose">
-                    <form id="text_form" autocomplete="off">
-                        <input name="message" placeholder="message" />
-                        <button>Send</button>
-                    </form>
-                    <button id="send-location">Send Location</button>
-                </div> 
+        </div>
+    </div>
 
-            </div>
-        </div>        
-
-        <script id="message-template" type="text/html">
+    <script id="message-template" type="text/html">
             <div class="message">
                 <p> 
                     <span class="message__name">{{username}}</span>
                     <span class="message__meta">{{createdAt}}</span>
                 </p>
-                <p>{{message}}</p>
+                <div class="message__content">{{{message}}}</div>
+                <button class="copy-button" data-message="{{rawMessage}}">Copy</button>
             </div>
         </script>
 
-        <script id="location-template" type="text/html">
-            <div class="messages">
+    <script id="location-template" type="text/html">
+            <div class="message">
                 <p> 
                     <span class="message__name">{{username}}</span>
                     <span class="message__meta">{{createdAt}}</span>
                 </p>
-                    <a href="{{location}}" target="_blank">My current Location</a>
-                </P>
+                <a href="{{location}}" target="_blank">My current location</a>
             </div>
         </script>
 
-        <script id="sidebar-template" type="text/html">
+    <script id="sidebar-template" type="text/html">
             <h1 class="room-title">{{room}}</h1>
-            <h2 class="list-title">Users</h2>
+            <h2 class="list-title">Members</h2>
             <ul class='users'>
                 {{#users}}
                     <li>{{username}}</li>
@@ -58,10 +75,11 @@
             </ul>
         </script>
 
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/mustache.js/3.0.1/mustache.min.js"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.22.2/moment.min.js"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/qs/6.6.0/qs.min.js"></script>
-        <script src="/socket.io/socket.io.js"></script>
-        <script src="./js/chat.js"></script>
-    </body>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/mustache.js/3.0.1/mustache.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.22.2/moment.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/qs/6.6.0/qs.min.js"></script>
+    <script src="/socket.io/socket.io.js"></script>
+    <script src="./js/chat.js"></script>
+</body>
+
 </html>
