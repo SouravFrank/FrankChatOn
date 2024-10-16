@@ -112,7 +112,6 @@ $messages.addEventListener('click', (e) => {
 });
 
 socket.on('message', (message) => {
-    console.log(message)
     const html = Mustache.render($messageTemplate, {
         username: message.username,
         message: nl2br(escapeHtml(message.text)),
@@ -153,7 +152,6 @@ function sendMessage() {
             $messageFormInput.value = '';
             $messageFormInput.style.height = 'auto';
             $messageFormInput.focus();
-            console.log(callback);
         });
     }
 }

@@ -12,7 +12,7 @@ html {
 
 body {
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    background: linear-gradient(145deg, #1e1e1e, #2c2f33);
+    background-color: rgba(35, 39, 42, 0.8); /* Dark theme background */
     color: #e0e0e0;
     display: flex;
     justify-content: center;
@@ -37,7 +37,7 @@ a {
     display: flex;
     width: 100%;
     height: 100vh;
-    background: rgba(44, 47, 51, 0.8);
+    background: rgba(29, 26, 57, 0.9); /* Slightly transparent for depth */
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
     border-radius: 16px;
     backdrop-filter: blur(10px);
@@ -107,14 +107,15 @@ a {
     overflow-y: auto;
     padding-right: 10px;
     margin-bottom: 20px;
+    font-size: 1rem; /* Adaptive size for messages */
 }
 
 .message {
     margin-bottom: 15px;
     padding: 10px;
-    background: rgba(58, 63, 68, 0.8);
     border-radius: 16px;
     backdrop-filter: blur(10px);
+    color: #E8BCB9; /* Secondary color */
 }
 
 .message__name {
@@ -160,7 +161,7 @@ a {
     border-radius: 8px;
     font-size: 1rem;
     background: rgba(58, 63, 68, 0.8);
-    color: #e0e0e0;
+    color: #E8BCB9; /* Secondary color */
     backdrop-filter: blur(10px);
     resize: none;
     overflow-y: auto;
@@ -174,24 +175,22 @@ a {
     justify-content: space-between;
     align-items: center;
     margin-top: 10px;
+    flex-wrap: wrap;
 }
 
 /* Material UI-like Button Styles */
 .btn {
     display: inline-flex;
-    align-items: center;
+    align-items: center; /* Center items vertically */
     justify-content: center;
-    padding: 8px 16px;
+    padding: 10px 16px; /* Adjusted padding for better appearance */
     border: none;
-    border-radius: 4px;
-    font-size: 14px;
+    border-radius: 8px;
+    font-size: 16px; /* Consistent font size */
     font-weight: 500;
     cursor: pointer;
-    transition: all 0.3s ease;
-    background-color: #424242;
-    color: #fff;
-    min-width: 120px;
-    height: 40px;
+    transition: background 0.3s ease;
+    color: #fff; /* White text for contrast */
 }
 
 .btn:hover {
@@ -203,34 +202,27 @@ a {
 }
 
 .btn-icon .material-icons {
-    margin-right: 8px;
+    margin-right: 8px; /* Space between icon and text */
     font-size: 18px;
 }
 
 .btn-text {
     text-transform: capitalize;
+    display: inline-block; /* Ensure text is treated as a block for centering */
 }
 
 .btn-primary {
-    background-color: #3498db;
+    background-color: #AE445A; /* New primary color for other CTA buttons */
     font-size: 16px;
     min-width: 140px;
     height: 48px;
 }
 
 .btn-primary:hover {
-    background-color: #2980b9;
+    background-color: #9B3A4A; /* Lighter shade for hover effect */
 }
 
 /* Updated compose button styles */
-.compose-actions {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-top: 10px;
-    flex-wrap: wrap;
-}
-
 .compose-actions__buttons {
     display: flex;
     gap: 8px;
@@ -324,16 +316,81 @@ a {
 }
 
 .copy-button {
-    background: #3498db;
+    background: #F39F5A; /* Primary color for the copy button */
     color: #fff;
     border: none;
     padding: 5px 10px;
-    border-radius: 4px;
+    border-radius: 8px;
     cursor: pointer;
     font-size: 0.8rem;
-    transition: background 0.3s;
+    transition: background 0.3s, transform 0.1s; /* Added transform for click effect */
 }
 
 .copy-button:hover {
-    background: #2980b9;
+    background: #D68A4D; /* Darker shade for hover effect */
+}
+
+.copy-button:active {
+    background: #C77A3D; /* Even darker shade for active effect */
+    transform: scale(0.95); /* Slightly shrink on click */
+}
+
+/* Adaptive Font Sizes */
+h1 {
+    font-size: 2rem; /* Adaptive size */
+}
+
+/* Additional Styles */
+.compose textarea {
+    background: rgba(58, 63, 68, 0.8);
+    color: #451952; /* Secondary color */
+}
+
+/* Other CTA Button Styles */
+.btn-primary, #toggle-compose, #send-location {
+    background-color: #AE445A; /* New primary color for other CTA buttons */
+    color: #fff; /* White text for contrast */
+}
+
+.btn-primary:hover, #toggle-compose:hover, #send-location:hover {
+    background-color: #9B3A4A; /* Lighter shade for hover effect */
+}
+
+.btn-primary:active, #toggle-compose:active, #send-location:active {
+    background-color: #8A2E3D; /* Even darker shade for active effect */
+}
+
+/* Send Button Styles */
+.btn-send {
+    background-color: #E8BCB9; /* New primary color for the send button */
+    color: #1D1A39; /* Dark text for contrast */
+    font-size: 16px; /* Consistent font size */
+    min-width: 140px; /* Minimum width */
+    height: 48px; /* Uniform button height */
+    border-radius: 8px; /* Same border radius as other buttons */
+    transition: background 0.3s; /* Smooth transition for hover effect */
+}
+
+.btn-send:hover {
+    background-color: #D6A9A3; /* Lighter shade for hover effect */
+}
+
+.btn-send:active {
+    background-color: #C48B7A; /* Even darker shade for active effect */
+}
+
+/* Icon and Text Styles */
+.btn-icon .material-icons {
+    margin-right: 8px; /* Space between icon and text */
+    font-size: 18px;
+}
+
+.btn-text {
+    text-transform: capitalize;
+    display: inline-block; /* Ensure text is treated as a block for centering */
+}
+
+/* Adjusting the button text color for better visibility */
+.btn-primary, #toggle-compose, #send-location, .btn-send {
+    color: #fff; /* Ensure text is white for visibility */
 }
