@@ -343,7 +343,7 @@ h1 {
 /* Additional Styles */
 .compose textarea {
     background: rgba(58, 63, 68, 0.8);
-    color: #451952; /* Secondary color */
+    color: #E8BCB9; /* Secondary color */
 }
 
 /* Other CTA Button Styles */
@@ -363,7 +363,7 @@ h1 {
 /* Send Button Styles */
 .btn-send {
     background-color: #E8BCB9; /* New primary color for the send button */
-    color: #1D1A39; /* Dark text for contrast */
+    color: #1D1A39 !important; /* Dark text for contrast */
     font-size: 16px; /* Consistent font size */
     min-width: 140px; /* Minimum width */
     height: 48px; /* Uniform button height */
