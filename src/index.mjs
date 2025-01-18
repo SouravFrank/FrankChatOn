@@ -7,6 +7,7 @@ import { dirname } from 'path';
 import {Filter} from 'bad-words';
 import { generateMessage, generateLocationMessage } from './utils/msg.mjs';
 import { addUser, removeUser, getUser, getUsersInRoom } from './utils/users.mjs';
+import cors from 'cors';
 
 // Get __dirname in ES module
 const __filename = fileURLToPath(import.meta.url);
@@ -14,6 +15,7 @@ const __dirname = dirname(__filename);
 
 // Initialize express app and create HTTP server
 const app = express();
+app.use(cors({ origin: '*' }));
 const server = http.createServer(app);
 
 // Initialize Socket.IO
