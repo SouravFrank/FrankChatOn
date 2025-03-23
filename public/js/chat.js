@@ -111,27 +111,118 @@ $messages.addEventListener('click', (e) => {
     }
 });
 
+// Add a system message template reference
+const $systemMessageTemplate = document.querySelector('#system-message-template').innerHTML
+
+// Update the message event handler to differentiate message types
 socket.on('message', (message) => {
-    const html = Mustache.render($messageTemplate, {
-        username: message.username,
-        message: nl2br(escapeHtml(message.text)),
-        rawMessage: message.text,
-        createdAt: moment(message.createdAt).format('hh:mm:ss A')
-    })
-    $messages.insertAdjacentHTML('beforeend', html)
+    // Check if this is a system message
+    if (message.username === 'system') {
+        const html = Mustache.render($systemMessageTemplate, {
+            message: message.text,
+            createdAt: moment(message.createdAt).format('hh:mm:ss A')
+        })
+        $messages.insertAdjacentHTML('beforeend', html)
+    } else {
+        // Regular message - check if it's from the current user
+        const isCurrentUser = message.username === username;
+        
+        const html = Mustache.render($messageTemplate, {
+            username: message.username,
+            message: nl2br(escapeHtml(message.text)),
+            rawMessage: message.text,
+            createdAt: moment(message.createdAt).format('hh:mm:ss A'),
+            isCurrentUser: isCurrentUser,
+            isSystem: false
+        })
+        $messages.insertAdjacentHTML('beforeend', html)
+    }
+    
+    // Add a subtle animation to the new message
+    const $newMessage = $messages.lastElementChild
+    $newMessage.style.opacity = '0'
+    $newMessage.style.transform = 'translateY(20px)'
+    
+    // Trigger animation after a small delay
+    setTimeout(() => {
+        $newMessage.style.transition = 'opacity 0.3s ease, transform 0.3s ease'
+        $newMessage.style.opacity = '1'
+        $newMessage.style.transform = 'translateY(0)'
+    }, 10)
+    
     autoscroll()
 })
 
+// Update location message handler to identify current user
 socket.on('locationMessage', (message) => {
-    console.log(message)
+    const isCurrentUser = message.username === username;
+    
     const html = Mustache.render($locationTemplate, {
         username: message.username,
         location: message.location,
-        createdAt: moment(message.createdAt).format('hh:mm:ss A')
+        createdAt: moment(message.createdAt).format('hh:mm:ss A'),
+        isCurrentUser: isCurrentUser
     })
     $messages.insertAdjacentHTML('beforeend', html)
+    
+    // Add animation to location message
+    const $newMessage = $messages.lastElementChild
+    $newMessage.style.opacity = '0'
+    $newMessage.style.transform = 'translateY(20px)'
+    
+    setTimeout(() => {
+        $newMessage.style.transition = 'opacity 0.3s ease, transform 0.3s ease'
+        $newMessage.style.opacity = '1'
+        $newMessage.style.transform = 'translateY(0)'
+    }, 10)
+    
     autoscroll()
 })
+
+// Add typing indicator functionality
+let typingTimeout;
+$messageFormInput.addEventListener('input', function() {
+    // Resize textarea as before
+    if (!$composeArea.classList.contains('expanded')) {
+        this.style.height = 'auto';
+        this.style.height = Math.min(this.scrollHeight, 200) + 'px';
+    }
+    
+    // Emit typing event
+    clearTimeout(typingTimeout);
+    socket.emit('typing', { username, room });
+    
+    // Clear typing status after 2 seconds of inactivity
+    typingTimeout = setTimeout(() => {
+        socket.emit('stopTyping', { username, room });
+    }, 2000);
+});
+
+// Handle typing indicators from other users
+socket.on('userTyping', (user) => {
+    // Only show typing indicator if it's not the current user
+    if (user !== username) {
+        // Check if typing indicator already exists
+        let typingElement = document.querySelector('.typing-indicator');
+        if (!typingElement) {
+            typingElement = document.createElement('div');
+            typingElement.className = 'typing-indicator';
+            typingElement.innerHTML = `<span class="typing-user">${user}</span> is typing<span class="typing-dots">...</span>`;
+            $messages.appendChild(typingElement);
+            autoscroll();
+        } else {
+            typingElement.innerHTML = `<span class="typing-user">${user}</span> is typing<span class="typing-dots">...</span>`;
+        }
+    }
+});
+
+// Handle when user stops typing
+socket.on('userStoppedTyping', (user) => {
+    const typingElement = document.querySelector('.typing-indicator');
+    if (typingElement) {
+        typingElement.remove();
+    }
+});
 
 socket.on('roomData', ({ room, users }) => {
     console.log(users)

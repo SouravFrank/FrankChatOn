@@ -7,6 +7,8 @@
     <link rel="stylesheet" href="./css/styles.css">
     <meta name="viewport" content="height=device-height, initial-scale=1.0">
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
 </head>
 
 <body>
@@ -42,16 +44,29 @@
             </div>
         </div>
     </div>
+    <!-- Update the message template -->
     <script id="message-template" type="text/html">
-            <div class="message">
-                <p> 
-                    <span class="message__name">{{username}}</span>
-                    <span class="message__meta">{{createdAt}}</span>
-                </p>
-                <div class="message__content">{{{message}}}</div>
-                <button class="copy-button" data-message="{{rawMessage}}">Copy</button>
+        <div class="message {{#isCurrentUser}}message--own{{/isCurrentUser}} {{#isSystem}}message--system{{/isSystem}}">
+            <p class="message__header"> 
+                <span class="message__name">{{username}}</span>
+                <span class="message__meta">{{createdAt}}</span>
+            </p>
+            <div class="message__content">{{{message}}}</div>
+            {{^isSystem}}
+            <button class="copy-button" data-message="{{rawMessage}}">Copy</button>
+            {{/isSystem}}
+        </div>
+    </script>
+
+    <!-- Update the system message template -->
+    <script id="system-message-template" type="text/html">
+        <div class="system-message">
+            <div class="system-message__content">
+                <span class="system-message__icon material-icons">info</span>
+                <span class="system-message__text">{{message}}</span>
             </div>
-        </script>
+        </div>
+    </script>
 
     <script id="location-template" type="text/html">
             <div class="message">
