@@ -115,43 +115,185 @@ $messages.addEventListener('click', (e) => {
 const $systemMessageTemplate = document.querySelector('#system-message-template').innerHTML
 
 // Update the message event handler to differentiate message types
+// Add code block detection and formatting
+// Update the code block formatting function
+function formatMessageWithCodeBlocks(text) {
+    // Improved regex to better detect code blocks with or without language specification
+    const codeBlockRegex = /```([\w-]*)\s*\n([\s\S]*?)\n\s*```/g;
+    let formattedText = escapeHtml(text);
+    let codeBlocks = [];
+    let match;
+    let index = 0;
+    
+    // Find all code blocks
+    while ((match = codeBlockRegex.exec(text)) !== null) {
+        const language = match[1].trim() || 'plaintext';
+        const code = escapeHtml(match[2]);
+        const placeholder = `__CODE_BLOCK_${index}__`;
+        
+        codeBlocks.push({
+            placeholder,
+            language,
+            code
+        });
+        
+        // Replace the entire match with the placeholder
+        formattedText = formattedText.replace(match[0], placeholder);
+        index++;
+    }
+    
+    // Replace newlines with <br> for regular text
+    formattedText = nl2br(formattedText);
+    
+    // Replace placeholders with formatted code blocks
+    codeBlocks.forEach(block => {
+        const codeBlockHtml = `
+            <div class="code-block" data-language="${block.language}">
+                <div class="code-block__header">
+                    <span class="code-block__language">${block.language}</span>
+                    <div class="code-block__actions">
+                        <button class="code-block__action code-block__copy" title="Copy code">
+                            <span class="material-icons">content_copy</span>
+                        </button>
+                        <button class="code-block__action code-block__toggle" title="Toggle code block">
+                            <span class="material-icons">unfold_less</span>
+                        </button>
+                    </div>
+                </div>
+                <pre class="code-block__content"><code>${block.code}</code></pre>
+            </div>
+        `;
+        formattedText = formattedText.replace(block.placeholder, codeBlockHtml);
+    });
+    
+    return formattedText;
+}
+
+// Update the message template rendering to include collapse/expand functionality
 socket.on('message', (message) => {
     // Check if this is a system message
     if (message.username === 'system') {
         const html = Mustache.render($systemMessageTemplate, {
             message: message.text,
             createdAt: moment(message.createdAt).format('hh:mm:ss A')
-        })
-        $messages.insertAdjacentHTML('beforeend', html)
+        });
+        $messages.insertAdjacentHTML('beforeend', html);
     } else {
         // Regular message - check if it's from the current user
         const isCurrentUser = message.username === username;
         
         const html = Mustache.render($messageTemplate, {
             username: message.username,
-            message: nl2br(escapeHtml(message.text)),
+            message: formatMessageWithCodeBlocks(message.text),
             rawMessage: message.text,
             createdAt: moment(message.createdAt).format('hh:mm:ss A'),
             isCurrentUser: isCurrentUser,
-            isSystem: false
-        })
-        $messages.insertAdjacentHTML('beforeend', html)
+            isSystem: false,
+            // Add a preview of the message (first line only)
+            preview: message.text.split('\n')[0].substring(0, 100) + (message.text.length > 100 ? '...' : '')
+        });
+        $messages.insertAdjacentHTML('beforeend', html);
     }
     
-    // Add a subtle animation to the new message
-    const $newMessage = $messages.lastElementChild
-    $newMessage.style.opacity = '0'
-    $newMessage.style.transform = 'translateY(20px)'
+    // Add animation to the new message
+    const $newMessage = $messages.lastElementChild;
+    $newMessage.style.opacity = '0';
+    $newMessage.style.transform = 'translateY(20px)';
     
-    // Trigger animation after a small delay
     setTimeout(() => {
-        $newMessage.style.transition = 'opacity 0.3s ease, transform 0.3s ease'
-        $newMessage.style.opacity = '1'
-        $newMessage.style.transform = 'translateY(0)'
-    }, 10)
+        $newMessage.style.transition = 'opacity 0.3s ease, transform 0.3s ease';
+        $newMessage.style.opacity = '1';
+        $newMessage.style.transform = 'translateY(0)';
+    }, 10);
     
-    autoscroll()
-})
+    autoscroll();
+});
+
+// Add function to copy message with animation
+function copyMessageContent(message, button) {
+    const textarea = document.createElement('textarea');
+    textarea.value = message;
+    textarea.style.position = 'fixed';
+    textarea.style.opacity = 0;
+    document.body.appendChild(textarea);
+    textarea.select();
+    
+    // Find the message container
+    const messageElement = button.closest('.message');
+    
+    try {
+        document.execCommand('copy');
+        console.log('Message copied to clipboard');
+        
+        // Show copied animation
+        button.textContent = 'Copied!';
+        button.disabled = true;
+        
+        // Add highlight animation to the message
+        messageElement.classList.add('message--copied');
+        
+        // Collapse the message after copying
+        if (!messageElement.classList.contains('message--collapsed')) {
+            toggleMessageCollapse(messageElement);
+        }
+        
+        setTimeout(() => {
+            button.textContent = 'Copy';
+            button.disabled = false;
+            messageElement.classList.remove('message--copied');
+        }, 1500);
+    } catch (err) {
+        console.error('Could not copy text: ', err);
+    } finally {
+        document.body.removeChild(textarea);
+    }
+}
+
+// Function to toggle message collapse state
+function toggleMessageCollapse(messageElement) {
+    const messageContent = messageElement.querySelector('.message__content');
+    const messagePreview = messageElement.querySelector('.message__preview');
+    const toggleButton = messageElement.querySelector('.message__toggle');
+    
+    if (messageElement.classList.contains('message--collapsed')) {
+        // Expand
+        messageElement.classList.remove('message--collapsed');
+        messageContent.style.display = 'block';
+        messagePreview.style.display = 'none';
+        if (toggleButton) {
+            toggleButton.querySelector('.material-icons').textContent = 'expand_less';
+            toggleButton.setAttribute('title', 'Collapse message');
+        }
+    } else {
+        // Collapse
+        messageElement.classList.add('message--collapsed');
+        messageContent.style.display = 'none';
+        messagePreview.style.display = 'block';
+        if (toggleButton) {
+            toggleButton.querySelector('.material-icons').textContent = 'expand_more';
+            toggleButton.setAttribute('title', 'Expand message');
+        }
+    }
+}
+
+// Update event delegation for message actions
+$messages.addEventListener('click', (e) => {
+    // Handle message toggle button clicks
+    if (e.target.closest('.message__toggle')) {
+        const button = e.target.closest('.message__toggle');
+        const messageElement = button.closest('.message');
+        toggleMessageCollapse(messageElement);
+    }
+    
+    // Handle copy button clicks
+    if (e.target.classList.contains('copy-button') || e.target.closest('.copy-button')) {
+        const button = e.target.classList.contains('copy-button') ? e.target : e.target.closest('.copy-button');
+        const message = button.getAttribute('data-message');
+        copyMessageContent(message, button);
+    }
+    
+    // Rest of the event handlers...
+});
 
 // Update location message handler to identify current user
 socket.on('locationMessage', (message) => {

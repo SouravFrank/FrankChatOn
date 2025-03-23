@@ -44,17 +44,48 @@
             </div>
         </div>
     </div>
-    <!-- Update the message template -->
+    <!-- Update the message template to support code blocks -->
+    <!-- Update the message template to support collapsing -->
     <script id="message-template" type="text/html">
         <div class="message {{#isCurrentUser}}message--own{{/isCurrentUser}} {{#isSystem}}message--system{{/isSystem}}">
+            <div class="message__header">
+                <span class="message__name">{{username}}</span>
+                <span class="message__meta">{{createdAt}}</span>
+                <button class="message__toggle" title="Collapse message">
+                    <span class="material-icons">expand_less</span>
+                </button>
+            </div>
+            <div class="message__preview" style="display: none;">{{preview}}</div>
+            <div class="message__content">{{{message}}}</div>
+            <div class="message__actions">
+                {{^isSystem}}
+                <button class="copy-button" data-message="{{rawMessage}}">
+                    <span class="material-icons">content_copy</span> Copy
+                </button>
+                {{/isSystem}}
+            </div>
+        </div>
+    </script>
+
+    <!-- Update the location template for better UI -->
+    <script id="location-template" type="text/html">
+        <div class="message location-message {{#isCurrentUser}}message--own{{/isCurrentUser}}">
             <p class="message__header"> 
                 <span class="message__name">{{username}}</span>
                 <span class="message__meta">{{createdAt}}</span>
             </p>
-            <div class="message__content">{{{message}}}</div>
-            {{^isSystem}}
-            <button class="copy-button" data-message="{{rawMessage}}">Copy</button>
-            {{/isSystem}}
+            <div class="location-preview">
+                <div class="location-icon">
+                    <span class="material-icons">place</span>
+                </div>
+                <div class="location-info">
+                    <p>Shared a location</p>
+                    <a href="{{location}}" target="_blank" class="location-link">
+                        <span class="material-icons">open_in_new</span>
+                        View on Google Maps
+                    </a>
+                </div>
+            </div>
         </div>
     </script>
 

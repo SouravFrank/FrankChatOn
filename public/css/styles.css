@@ -376,3 +376,297 @@ body {
     background: linear-gradient(var(--color-primary), var(--color-secondary));
     border-radius: 10px;
 }
+
+/* Add styles for code blocks */
+.code-block {
+    position: relative;
+    margin: 10px 0;
+    background: rgba(13, 17, 23, 0.8);
+    border-radius: 8px;
+    overflow: hidden;
+    font-family: 'Consolas', 'Monaco', monospace;
+    font-size: 0.9rem;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    transition: all 0.3s ease;
+}
+
+.code-block__header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 8px 12px;
+    background: rgba(30, 41, 59, 0.8);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    cursor: pointer;
+}
+
+.code-block__language {
+    font-size: 0.8rem;
+    color: #E8BCB9;
+    font-weight: 600;
+    text-transform: uppercase;
+}
+
+.code-block__actions {
+    display: flex;
+    gap: 8px;
+}
+
+.code-block__action {
+    background: none;
+    border: none;
+    color: rgba(255, 255, 255, 0.6);
+    cursor: pointer;
+    padding: 4px;
+    border-radius: 4px;
+    transition: all 0.2s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.code-block__action:hover {
+    color: #fff;
+    background: rgba(255, 255, 255, 0.1);
+}
+
+.code-block__content {
+    padding: 12px;
+    overflow-x: auto;
+    max-height: 300px;
+    transition: max-height 0.3s ease, padding 0.3s ease;
+    margin: 0;
+    white-space: pre-wrap;
+    word-break: break-word;
+}
+
+.code-block.collapsed .code-block__content {
+    max-height: 0;
+    padding: 0 12px;
+    overflow: hidden;
+}
+
+.code-block code {
+    font-family: 'Consolas', 'Monaco', monospace;
+    color: #E8BCB9;
+}
+
+/* Improved location message styling */
+.location-message {
+    background: rgba(30, 41, 59, 0.5);
+}
+
+.location-preview {
+    display: flex;
+    align-items: center;
+    background: rgba(30, 41, 59, 0.3);
+    border-radius: 12px;
+    padding: 12px;
+    margin-top: 8px;
+}
+
+.location-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 48px;
+    height: 48px;
+    background: var(--gradient-primary);
+    border-radius: 50%;
+    margin-right: 12px;
+}
+
+.location-icon .material-icons {
+    font-size: 24px;
+    color: white;
+}
+
+.location-info {
+    flex: 1;
+}
+
+.location-info p {
+    margin-bottom: 4px;
+    font-weight: 500;
+}
+
+.location-link {
+    display: inline-flex;
+    align-items: center;
+    color: var(--color-primary);
+    font-weight: 600;
+    text-decoration: none;
+    padding: 4px 8px;
+    border-radius: 8px;
+    background: rgba(139, 92, 246, 0.1);
+    transition: all 0.2s ease;
+}
+
+.location-link:hover {
+    background: rgba(139, 92, 246, 0.2);
+    transform: translateY(-2px);
+}
+
+.location-link .material-icons {
+    font-size: 16px;
+    margin-right: 4px;
+}
+
+/* Improved message actions */
+.message__actions {
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 8px;
+    opacity: 0;
+    transition: opacity 0.2s ease;
+}
+
+.message:hover .message__actions {
+    opacity: 1;
+}
+
+.copy-button {
+    display: flex;
+    align-items: center;
+    background: rgba(255, 255, 255, 0.1);
+    color: var(--color-light);
+    border: none;
+    padding: 4px 8px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 0.8rem;
+    font-weight: 600;
+    transition: all 0.2s ease;
+}
+
+.copy-button .material-icons {
+    font-size: 16px;
+    margin-right: 4px;
+}
+
+.copy-button:hover {
+    background: rgba(255, 255, 255, 0.2);
+    transform: translateY(-2px);
+}
+
+/* Message collapsing styles */
+.message {
+    position: relative;
+    transition: all 0.3s ease;
+}
+
+.message--collapsed .message__content {
+    display: none;
+}
+
+.message--collapsed .message__preview {
+    display: block;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    font-style: italic;
+    color: rgba(255, 255, 255, 0.7);
+    padding: 5px 0;
+}
+
+.message__header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.message__toggle {
+    background: none;
+    border: none;
+    color: rgba(255, 255, 255, 0.6);
+    cursor: pointer;
+    padding: 4px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s ease;
+}
+
+.message__toggle:hover {
+    background: rgba(255, 255, 255, 0.1);
+    color: #fff;
+}
+
+/* Copy animation */
+.message--copied {
+    animation: highlight-pulse 1.5s ease;
+}
+
+@keyframes highlight-pulse {
+    0% { background-color: rgba(var(--color-primary-rgb), 0.1); }
+    50% { background-color: rgba(var(--color-primary-rgb), 0.3); }
+    100% { background-color: rgba(var(--color-primary-rgb), 0.1); }
+}
+
+/* Ensure compose area is properly styled */
+.compose.expanded .compose-container {
+    height: 35vh;
+    display: flex;
+    flex-direction: column;
+}
+
+.compose.expanded textarea {
+    height: calc(35vh - 60px) !important;
+    max-height: calc(35vh - 60px);
+    flex: 1;
+}
+
+.compose textarea {
+    max-height: 80px; /* Limit to approximately 2 lines when collapsed */
+}
+
+/* Ensure compose actions are always visible */
+.compose-actions {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 12px;
+    position: relative;
+    z-index: 10;
+    background: rgba(17, 24, 39, 0.7); /* Match compose background */
+    padding: 5px 0;
+}
+
+/* Typing indicator */
+.typing-indicator {
+    display: flex;
+    align-items: center;
+    padding: 8px 12px;
+    margin-bottom: 10px;
+    background: rgba(30, 41, 59, 0.3);
+    border-radius: 16px;
+    align-self: flex-start;
+    max-width: 50%;
+}
+
+.typing-user {
+    font-weight: 600;
+    color: var(--color-accent);
+    margin-right: 4px;
+}
+
+.typing-dots {
+    display: inline-block;
+    position: relative;
+    width: 20px;
+}
+
+.typing-dots::after {
+    content: '...';
+    position: absolute;
+    left: 0;
+    top: -2px;
+    animation: typingDots 1.5s infinite;
+}
+
+@keyframes typingDots {
+    0%, 20% { content: '.'; }
+    40% { content: '..'; }
+    60%, 100% { content: '...'; }
+}
