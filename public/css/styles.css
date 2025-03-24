@@ -12,6 +12,7 @@
     --color-dark: #1F2937;
     --color-light: #F9FAFB;
     --color-system: #10B981;
+    --color-primary-rgb: 139, 92, 246;
     --gradient-primary: linear-gradient(135deg, var(--color-primary), var(--color-secondary));
     --gradient-accent: linear-gradient(135deg, var(--color-accent), var(--color-secondary));
     --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
@@ -20,30 +21,28 @@
     --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
 }
 
-html {
+html, body {
     font-size: 16px;
+    height: 100%;
+    width: 100%;
+    overflow: hidden;
 }
 
 body {
     font-family: 'Quicksand', sans-serif;
     background: radial-gradient(ellipse at bottom, #1B2735 0%, #090A0F 100%);
     color: var(--color-light);
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
     margin: 0;
-    overflow: hidden;
+    padding: 0;
 }
 
-/* Chat Container - Futuristic Glass Design */
+/* Chat Container - Full viewport */
 .chat {
     display: flex;
-    width: 95%;
-    height: 95vh;
+    width: 100%;
+    height: 100vh;
     background: rgba(31, 41, 55, 0.4);
     box-shadow: var(--shadow-xl);
-    border-radius: 24px;
     backdrop-filter: blur(12px);
     border: 1px solid rgba(255, 255, 255, 0.1);
     overflow: hidden;
@@ -67,24 +66,25 @@ body {
     100% { transform: rotate(360deg); }
 }
 
-/* Sidebar - Futuristic Panel */
+/* Sidebar - Compact */
 .chat__sidebar {
-    width: 25%;
+    width: 18%;
+    min-width: 200px;
     background: rgba(17, 24, 39, 0.7);
     color: #fff;
-    padding: 20px;
+    padding: 15px;
     display: flex;
     flex-direction: column;
-    border-radius: 24px 0 0 24px;
     backdrop-filter: blur(12px);
     border-right: 1px solid rgba(255, 255, 255, 0.1);
     box-shadow: inset -5px 0 15px rgba(0, 0, 0, 0.1);
+    transition: width 0.3s ease;
 }
 
 .room-title {
-    font-size: 1.5rem;
+    font-size: 1.2rem;
     font-weight: 700;
-    margin-bottom: 1rem;
+    margin-bottom: 0.75rem;
     text-transform: uppercase;
     background: var(--gradient-primary);
     -webkit-background-clip: text;
@@ -94,7 +94,7 @@ body {
 }
 
 .list-title {
-    font-size: 1.2rem;
+    font-size: 1rem;
     font-weight: 600;
     margin-bottom: 0.5rem;
     color: var(--color-accent);
@@ -103,17 +103,20 @@ body {
 .users {
     list-style: none;
     padding: 0;
-    margin-top: 1rem;
+    margin-top: 0.5rem;
     border-top: 1px solid rgba(255, 255, 255, 0.1);
+    overflow-y: auto;
+    flex: 1;
 }
 
 .users li {
-    padding: 0.75rem 1rem;
-    border-radius: 12px;
-    margin-bottom: 0.5rem;
+    padding: 0.5rem 0.75rem;
+    border-radius: 8px;
+    margin-bottom: 0.25rem;
     transition: all 0.3s ease;
     background: rgba(255, 255, 255, 0.05);
     border: 1px solid rgba(255, 255, 255, 0.05);
+    font-size: 0.9rem;
 }
 
 .users li:hover {
@@ -122,32 +125,30 @@ body {
     box-shadow: var(--shadow-md);
 }
 
-/* Main Chat Area */
+/* Main Chat Area - Maximized */
 .chat__main {
-    width: 75%;
+    width: 82%;
     display: flex;
     flex-direction: column;
-    padding: 20px;
     background: rgba(17, 24, 39, 0.5);
-    border-radius: 0 24px 24px 0;
     backdrop-filter: blur(12px);
 }
 
 .chat__messages {
     flex: 1;
     overflow-y: auto;
-    padding: 15px;
-    margin-bottom: 20px;
+    padding: 10px 15px;
+    margin-bottom: 0;
     display: flex;
     flex-direction: column;
 }
 
-/* Message Styles - Different directions for own vs others */
+/* Message Styles - More compact */
 .message {
-    max-width: 70%;
-    margin-bottom: 20px;
-    padding: 12px 16px;
-    border-radius: 18px;
+    max-width: 75%;
+    margin-bottom: 12px;
+    padding: 8px 12px;
+    border-radius: 14px;
     position: relative;
     animation: fadeIn 0.3s ease-out;
     background: rgba(255, 255, 255, 0.1);
@@ -162,23 +163,24 @@ body {
     align-self: flex-end;
     background: rgba(139, 92, 246, 0.2);
     border-color: rgba(139, 92, 246, 0.3);
-    border-radius: 18px 18px 0 18px;
+    border-radius: 14px 14px 0 14px;
 }
 
 .message--system {
     align-self: center;
-    max-width: 80%;
+    max-width: 85%;
     background: rgba(16, 185, 129, 0.2);
     border-color: rgba(16, 185, 129, 0.3);
-    border-radius: 12px;
-    padding: 8px 16px;
+    border-radius: 10px;
+    padding: 6px 12px;
+    margin-bottom: 8px;
 }
 
 .message__header {
     display: flex;
     justify-content: space-between;
-    margin-bottom: 6px;
-    font-size: 0.85rem;
+    margin-bottom: 4px;
+    font-size: 0.8rem;
 }
 
 .message__name {
@@ -191,7 +193,7 @@ body {
 }
 
 .message__meta {
-    font-size: 0.75rem;
+    font-size: 0.7rem;
     color: rgba(255, 255, 255, 0.6);
 }
 
@@ -199,9 +201,9 @@ body {
     white-space: pre-wrap;
     word-wrap: break-word;
     font-family: inherit;
-    line-height: 1.5;
+    line-height: 1.4;
+    font-size: 0.95rem;
 }
-
 /* System Message - Special Design */
 .system-message {
     align-self: center;
@@ -231,38 +233,12 @@ body {
     font-size: 0.9rem;
 }
 
-/* Copy Button - Adorable Design */
-.copy-button {
-    background: var(--gradient-accent);
-    color: white;
-    border: none;
-    padding: 5px 10px;
-    border-radius: 12px;
-    cursor: pointer;
-    font-size: 0.8rem;
-    font-weight: 600;
-    margin-top: 8px;
-    transition: all 0.3s ease;
-    box-shadow: var(--shadow-sm);
-}
-
-.copy-button:hover {
-    transform: translateY(-2px);
-    box-shadow: var(--shadow-md);
-}
-
-.copy-button:active {
-    transform: scale(0.95);
-}
-
-/* Compose Area - Futuristic Input */
+/* Compose Area - Compact */
 .compose {
     background: rgba(17, 24, 39, 0.7);
-    padding: 15px;
-    border-radius: 20px;
+    padding: 10px;
     backdrop-filter: blur(12px);
-    border: 1px solid rgba(255, 255, 255, 0.1);
-    box-shadow: var(--shadow-lg);
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
 }
 
 .compose-container {
@@ -271,15 +247,16 @@ body {
 }
 
 .compose textarea {
-    padding: 12px 16px;
-    border-radius: 16px;
+    padding: 10px 12px;
+    border-radius: 12px;
     background: rgba(31, 41, 55, 0.5);
     border: 1px solid rgba(255, 255, 255, 0.1);
     color: var(--color-light);
     font-family: 'Quicksand', sans-serif;
-    font-size: 1rem;
+    font-size: 0.95rem;
     resize: none;
-    min-height: 50px;
+    min-height: 40px;
+    max-height: 80px;
     transition: all 0.3s ease;
     box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.1);
 }
@@ -294,17 +271,21 @@ body {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin-top: 12px;
+    margin-top: 8px;
+    position: relative;
+    z-index: 10;
+    background: rgba(17, 24, 39, 0.7);
+    padding: 3px 0;
 }
 
-/* Button Styles - Futuristic Buttons */
+/* Button Styles - More compact */
 .btn {
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    padding: 10px 16px;
+    padding: 8px 12px;
     border: none;
-    border-radius: 12px;
+    border-radius: 10px;
     font-weight: 600;
     cursor: pointer;
     transition: all 0.3s ease;
@@ -312,25 +293,11 @@ body {
     overflow: hidden;
 }
 
-.btn::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: -100%;
-    width: 100%;
-    height: 100%;
-    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
-    transition: all 0.5s ease;
-}
-
-.btn:hover::before {
-    left: 100%;
-}
-
 .btn-icon {
     background: rgba(139, 92, 246, 0.2);
     border: 1px solid rgba(139, 92, 246, 0.3);
     color: var(--color-light);
+    padding: 6px 10px;
 }
 
 .btn-icon:hover {
@@ -343,7 +310,7 @@ body {
     background: var(--gradient-primary);
     color: white;
     font-weight: 700;
-    padding: 12px 24px;
+    padding: 8px 16px;
     box-shadow: var(--shadow-md);
 }
 
@@ -362,93 +329,35 @@ body {
     to { opacity: 1; transform: translateY(0); }
 }
 
-/* Scrollbar */
-::-webkit-scrollbar {
-    width: 6px;
+
+/* Hide text on smaller screens */
+@media (max-width: 768px) {
+    .btn-text {
+        display: none;
+    }
+    
+    .chat__sidebar {
+        width: 25%;
+        min-width: 80px;
+        padding: 10px;
+    }
+    
+    .chat__main {
+        width: 75%;
+    }
 }
 
-::-webkit-scrollbar-track {
-    background: rgba(31, 41, 55, 0.2);
-    border-radius: 10px;
-}
-
-::-webkit-scrollbar-thumb {
-    background: linear-gradient(var(--color-primary), var(--color-secondary));
-    border-radius: 10px;
-}
-
-/* Add styles for code blocks */
-.code-block {
-    position: relative;
-    margin: 10px 0;
-    background: rgba(13, 17, 23, 0.8);
-    border-radius: 8px;
-    overflow: hidden;
-    font-family: 'Consolas', 'Monaco', monospace;
-    font-size: 0.9rem;
-    border: 1px solid rgba(255, 255, 255, 0.1);
-    transition: all 0.3s ease;
-}
-
-.code-block__header {
+/* Ensure compose area is properly styled */
+.compose.expanded .compose-container {
+    height: 30vh;
     display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 8px 12px;
-    background: rgba(30, 41, 59, 0.8);
-    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-    cursor: pointer;
+    flex-direction: column;
 }
 
-.code-block__language {
-    font-size: 0.8rem;
-    color: #E8BCB9;
-    font-weight: 600;
-    text-transform: uppercase;
-}
-
-.code-block__actions {
-    display: flex;
-    gap: 8px;
-}
-
-.code-block__action {
-    background: none;
-    border: none;
-    color: rgba(255, 255, 255, 0.6);
-    cursor: pointer;
-    padding: 4px;
-    border-radius: 4px;
-    transition: all 0.2s ease;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-
-.code-block__action:hover {
-    color: #fff;
-    background: rgba(255, 255, 255, 0.1);
-}
-
-.code-block__content {
-    padding: 12px;
-    overflow-x: auto;
-    max-height: 300px;
-    transition: max-height 0.3s ease, padding 0.3s ease;
-    margin: 0;
-    white-space: pre-wrap;
-    word-break: break-word;
-}
-
-.code-block.collapsed .code-block__content {
-    max-height: 0;
-    padding: 0 12px;
-    overflow: hidden;
-}
-
-.code-block code {
-    font-family: 'Consolas', 'Monaco', monospace;
-    color: #E8BCB9;
+.compose.expanded textarea {
+    height: calc(30vh - 50px) !important;
+    max-height: calc(30vh - 50px);
+    flex: 1;
 }
 
 /* Improved location message styling */
@@ -566,13 +475,8 @@ body {
     text-overflow: ellipsis;
     font-style: italic;
     color: rgba(255, 255, 255, 0.7);
-    padding: 5px 0;
-}
-
-.message__header {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
+    padding: 3px 0;
+    font-size: 0.9rem;
 }
 
 .message__toggle {
@@ -580,93 +484,42 @@ body {
     border: none;
     color: rgba(255, 255, 255, 0.6);
     cursor: pointer;
-    padding: 4px;
+    padding: 2px;
     border-radius: 50%;
     display: flex;
     align-items: center;
     justify-content: center;
     transition: all 0.2s ease;
+    font-size: 0.9rem;
 }
 
-.message__toggle:hover {
-    background: rgba(255, 255, 255, 0.1);
-    color: #fff;
+/* Code block styles - more compact */
+.code-block {
+    margin: 8px 0;
+    border-radius: 6px;
+    font-size: 0.85rem;
 }
 
-/* Copy animation */
-.message--copied {
-    animation: highlight-pulse 1.5s ease;
+.code-block__header {
+    padding: 6px 10px;
 }
 
-@keyframes highlight-pulse {
-    0% { background-color: rgba(var(--color-primary-rgb), 0.1); }
-    50% { background-color: rgba(var(--color-primary-rgb), 0.3); }
-    100% { background-color: rgba(var(--color-primary-rgb), 0.1); }
+.code-block__content {
+    padding: 10px;
+    max-height: 250px;
 }
 
-/* Ensure compose area is properly styled */
-.compose.expanded .compose-container {
-    height: 35vh;
-    display: flex;
-    flex-direction: column;
+/* Scrollbar - thinner */
+::-webkit-scrollbar {
+    width: 4px;
 }
 
-.compose.expanded textarea {
-    height: calc(35vh - 60px) !important;
-    max-height: calc(35vh - 60px);
-    flex: 1;
+::-webkit-scrollbar-track {
+    background: rgba(31, 41, 55, 0.2);
+    border-radius: 8px;
 }
 
-.compose textarea {
-    max-height: 80px; /* Limit to approximately 2 lines when collapsed */
-}
-
-/* Ensure compose actions are always visible */
-.compose-actions {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-top: 12px;
-    position: relative;
-    z-index: 10;
-    background: rgba(17, 24, 39, 0.7); /* Match compose background */
-    padding: 5px 0;
-}
-
-/* Typing indicator */
-.typing-indicator {
-    display: flex;
-    align-items: center;
-    padding: 8px 12px;
-    margin-bottom: 10px;
-    background: rgba(30, 41, 59, 0.3);
-    border-radius: 16px;
-    align-self: flex-start;
-    max-width: 50%;
-}
-
-.typing-user {
-    font-weight: 600;
-    color: var(--color-accent);
-    margin-right: 4px;
-}
-
-.typing-dots {
-    display: inline-block;
-    position: relative;
-    width: 20px;
-}
-
-.typing-dots::after {
-    content: '...';
-    position: absolute;
-    left: 0;
-    top: -2px;
-    animation: typingDots 1.5s infinite;
-}
-
-@keyframes typingDots {
-    0%, 20% { content: '.'; }
-    40% { content: '..'; }
-    60%, 100% { content: '...'; }
+::-webkit-scrollbar-thumb {
+    background: linear-gradient(var(--color-primary), var(--color-secondary));
+    border-radius: 8px;
 }

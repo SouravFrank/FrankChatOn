@@ -5,7 +5,7 @@
     <title>Chat App</title>
     <link rel="icon" href="./img/favicon.png">
     <link rel="stylesheet" href="./css/styles.css">
-    <meta name="viewport" content="height=device-height, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <script src="https://cdn.tailwindcss.com"></script>
@@ -31,12 +31,10 @@
                                 </button>
                                 <button id="send-location" class="btn btn-icon">
                                     <span class="material-icons">location_on</span>
-                                    <span class="btn-text">Send Location</span>
                                 </button>
                             </div>
                             <button type="submit" class="btn btn-send">
                                 <span class="material-icons">send</span>
-                                <span class="btn-text">Send</span>
                             </button>
                         </div>
                     </div>
@@ -44,7 +42,6 @@
             </div>
         </div>
     </div>
-    <!-- Update the message template to support code blocks -->
     <!-- Update the message template to support collapsing -->
     <script id="message-template" type="text/html">
         <div class="message {{#isCurrentUser}}message--own{{/isCurrentUser}} {{#isSystem}}message--system{{/isSystem}}">
