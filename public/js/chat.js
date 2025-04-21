@@ -41,6 +41,10 @@ const autoscroll = () => {
     }
 }
 
+const scrollToBottom = () => {
+    $messages.scrollTop = $messages.scrollHeight;
+};
+
 // Toggle compose area
 $toggleComposeButton.addEventListener('click', () => {
     $composeArea.classList.toggle('expanded');
@@ -207,6 +211,7 @@ socket.on('message', (message) => {
     }, 10);
     
     autoscroll();
+    scrollToBottom();
 });
 
 // Add function to copy message with animation
@@ -319,6 +324,7 @@ socket.on('locationMessage', (message) => {
     }, 10)
     
     autoscroll()
+    scrollToBottom()
 })
 
 // Add typing indicator functionality
@@ -350,7 +356,7 @@ socket.on('userTyping', (user) => {
             typingElement = document.createElement('div');
             typingElement.className = 'typing-indicator';
             typingElement.innerHTML = `<span class="typing-user">${user}</span> is typing<span class="typing-dots">...</span>`;
-            $messages.appendChild(typingElement);
+            $messages.insertBefore(typingElement,$messages.lastElementChild);
             autoscroll();
         } else {
             typingElement.innerHTML = `<span class="typing-user">${user}</span> is typing<span class="typing-dots">...</span>`;
